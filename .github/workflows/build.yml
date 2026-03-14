@@ -1,0 +1,19 @@
+name: Compilar ASM IA32
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Descargar repo
+        uses: actions/checkout@v4
+
+      - name: Instalar NASM
+        run: sudo apt update && sudo apt install nasm gcc-multilib -y
+
+      - name: Compilar programa
+        run: |
+          nasm -f elf32 main.asm -o main.o
+          gcc -m32 main.o -o main
